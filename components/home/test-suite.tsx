@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Brain,
   Wrench,
@@ -6,9 +8,11 @@ import {
   Gauge,
   Search,
 } from "lucide-react"
+import { motion } from "motion/react"
 
 import { SectionHeader } from "@/components/site/section-header"
 import { cn } from "@/lib/utils"
+import { fadeUp, stagger } from "@/components/motion/primitives"
 
 type Priority = "top" | "core"
 
@@ -90,27 +94,38 @@ export function TestSuite() {
           }
           description="We lead with what matters to real humans — not just search engines. Usability and functionality first, SEO last."
         />
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          variants={stagger(0.08, 0.08)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+        >
           {tests.map(
             ({ icon: Icon, iconTone, title, description, tags, priority }) => (
-              <article
+              <motion.article
                 key={title}
+                variants={fadeUp}
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
                 tabIndex={0}
                 className={cn(
-                  "qa-press group rounded-2xl border border-border-soft bg-white p-6 outline-none",
-                  "hover:-translate-y-1 hover:border-brand hover:shadow-card-hover",
+                  "group rounded-2xl border border-border-soft bg-white p-6 outline-none",
+                  "hover:border-brand hover:shadow-card-hover",
                   "focus-visible:border-brand focus-visible:ring-4 focus-visible:ring-brand/15",
                 )}
               >
                 <div className="mb-3 flex items-center gap-3">
-                  <div
+                  <motion.div
+                    whileHover={{ rotate: -6, scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 320, damping: 15 }}
                     className={cn(
-                      "flex size-11 items-center justify-center rounded-xl transition-transform duration-300 group-hover:-rotate-3 group-hover:scale-105",
+                      "flex size-11 items-center justify-center rounded-xl",
                       iconTone,
                     )}
                   >
                     <Icon className="size-5" />
-                  </div>
+                  </motion.div>
                   <h3 className="font-heading text-base font-extrabold text-ink">
                     {title}
                   </h3>
@@ -138,10 +153,10 @@ export function TestSuite() {
                     </span>
                   ))}
                 </div>
-              </article>
+              </motion.article>
             ),
           )}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

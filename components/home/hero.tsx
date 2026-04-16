@@ -1,15 +1,18 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { ArrowRight, Check } from "lucide-react"
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react"
 
 import { cn } from "@/lib/utils"
+import { fadeUp, stagger } from "@/components/motion/primitives"
 
 /**
  * Hero split — marketing copy + URL capture on the left, an animated
- * "live audit" dashboard mock on the right. The dashboard bars and issue
- * cards animate in sequence on mount to demo what the product produces.
+ * live-audit dashboard on the right. Uses motion for a staggered entrance,
+ * magnetic button feedback, mouse-parallax on the dashboard, and a spring
+ * counter on each stat.
  */
 export function Hero() {
   const router = useRouter()
@@ -29,86 +32,195 @@ export function Hero() {
       <div className="qa-orb-float-alt pointer-events-none absolute -bottom-40 -right-28 size-[500px] rounded-full bg-[radial-gradient(circle,rgba(34,197,94,0.2)_0%,transparent_60%)]" />
 
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-16 xl:gap-20">
-        <div className="flex flex-col">
-          <div className="qa-reveal mb-7 inline-flex w-fit items-center gap-2 rounded-full border border-accent-bright/25 bg-accent-bright/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#4ade80]">
-            <span className="qa-blink size-[7px] rounded-full bg-[#4ade80]" />
+        <motion.div
+          className="flex flex-col"
+          variants={stagger(0.08, 0.1)}
+          initial="hidden"
+          animate="visible"
+        >
+          {/* Live badge with pulse ring */}
+          <motion.div
+            variants={fadeUp}
+            className="mb-7 inline-flex w-fit items-center gap-2 rounded-full border border-accent-bright/25 bg-accent-bright/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#4ade80]"
+          >
+            <span className="relative flex size-[7px]">
+              <motion.span
+                className="absolute inset-0 rounded-full bg-[#4ade80]"
+                animate={{ scale: [1, 2.4, 1], opacity: [0.55, 0, 0.55] }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
+              />
+              <span className="relative inline-flex size-full rounded-full bg-[#4ade80]" />
+            </span>
             9 Years of QA Expertise — Now Automated
-          </div>
+          </motion.div>
 
-          <h1 className="qa-reveal qa-delay-1 font-heading text-[clamp(2.25rem,5.2vw,4rem)] font-black leading-[1.05] tracking-tight text-balance text-white">
+          <motion.h1
+            variants={fadeUp}
+            className="font-heading text-[clamp(2.25rem,5.2vw,4rem)] font-black leading-[1.05] tracking-tight text-balance text-white"
+          >
             Is your website{" "}
-            <span className="text-accent-bright">actually working</span> for
-            your customers?
-          </h1>
+            <span className="relative inline-block text-accent-bright">
+              actually working
+              <motion.span
+                aria-hidden="true"
+                className="absolute inset-x-0 -bottom-1 h-[3px] origin-left rounded-full bg-accent-bright/80"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{
+                  delay: 0.8,
+                  duration: 0.7,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              />
+            </span>{" "}
+            for your customers?
+          </motion.h1>
 
-          <p className="qa-reveal qa-delay-2 mt-6 max-w-xl text-base leading-relaxed text-white/65 sm:text-lg">
+          <motion.p
+            variants={fadeUp}
+            className="mt-6 max-w-xl text-base leading-relaxed text-white/65 sm:text-lg"
+          >
             Get a free expert website audit in 60 seconds. We test usability,
-            broken functionality, UI bugs, mobile responsiveness, and SEO —
-            then give you a clear, actionable report your developer can fix
-            today.
-          </p>
+            broken functionality, UI bugs, mobile responsiveness, and SEO — then
+            give you a clear, actionable report your developer can fix today.
+          </motion.p>
 
           {/* URL capture */}
-          <div className="qa-reveal qa-delay-3 mt-10 rounded-2xl border border-white/15 bg-white/[0.06] p-3 shadow-surface-dark sm:p-4">
+          <motion.div
+            variants={fadeUp}
+            className="mt-10 rounded-2xl border border-white/15 bg-white/[0.06] p-3 shadow-surface-dark sm:p-4"
+          >
             <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
-              <div className="relative flex-1">
-                <span className="pointer-events-none absolute left-4 top-1/2 hidden -translate-y-1/2 font-mono text-xs text-white/30 sm:block">
-                  https://
-                </span>
-                <input
-                  id="audit-input"
-                  value={url}
-                  onChange={(e) => setUrl(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") submit()
-                  }}
-                  type="url"
-                  placeholder="yourwebsite.com"
-                  className={cn(
-                    "h-14 w-full rounded-xl border border-white/15 bg-white/10 px-5 sm:pl-20",
-                    "font-mono text-base text-white outline-none transition-all placeholder:text-white/35",
-                    "focus:border-accent-bright focus:bg-accent-bright/10 focus:ring-4 focus:ring-accent-bright/15",
-                  )}
-                />
-              </div>
-              <button
-                type="button"
-                onClick={submit}
-                className={cn(
-                  "qa-press group inline-flex h-14 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-accent-bright px-7 sm:px-8",
-                  "text-sm font-extrabold tracking-wide text-white shadow-glow-accent",
-                  "hover:-translate-y-0.5 hover:bg-accent-emerald hover:shadow-glow-accent-lg",
-                  "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent-bright/35",
-                )}
-              >
-                Audit My Website Free
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-              </button>
+              <UrlInput value={url} onChange={setUrl} onSubmit={submit} />
+              <MagneticButton onClick={submit} />
             </div>
             <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 px-1">
               <TrustItem label="No signup required" />
               <TrustItem label="Free preview in 60s" />
               <TrustItem label="Full report from $9" />
             </div>
-          </div>
+          </motion.div>
 
           {/* Stats */}
-          <div className="qa-reveal qa-delay-4 mt-10 grid grid-cols-2 gap-6 sm:flex sm:flex-wrap sm:gap-8">
-            <StatItem value="1,000+" label="Websites Audited" />
-            <StatItem value="35+" label="Quality Checks" />
-            <StatItem value="60s" label="Free Audit Time" />
-            <StatItem value="9yr" label="QA Expertise" />
-          </div>
-        </div>
+          <motion.div
+            variants={fadeUp}
+            className="mt-10 grid grid-cols-2 gap-6 sm:flex sm:flex-wrap sm:gap-8"
+          >
+            <StatItem value={1000} suffix="+" label="Websites Audited" />
+            <StatItem value={35} suffix="+" label="Quality Checks" />
+            <StatItem value={60} suffix="s" label="Free Audit Time" />
+            <StatItem value={9} suffix="yr" label="QA Expertise" />
+          </motion.div>
+        </motion.div>
 
         {/* Animated dashboard mock */}
-        <div className="qa-reveal qa-delay-2 relative hidden lg:block">
+        <motion.div
+          className="relative hidden lg:block"
+          initial={{ opacity: 0, y: 40, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ delay: 0.25, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
           <DashboardMock />
-        </div>
+        </motion.div>
       </div>
     </section>
   )
 }
+
+/* ------------------------------------------------------------------ */
+/*  URL input                                                          */
+/* ------------------------------------------------------------------ */
+
+function UrlInput({
+  value,
+  onChange,
+  onSubmit,
+}: {
+  value: string
+  onChange: (v: string) => void
+  onSubmit: () => void
+}) {
+  return (
+    <div className="relative flex-1">
+      <span className="pointer-events-none absolute left-4 top-1/2 hidden -translate-y-1/2 font-mono text-xs text-white/30 sm:block">
+        https://
+      </span>
+      <input
+        id="audit-input"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") onSubmit()
+        }}
+        type="url"
+        placeholder="yourwebsite.com"
+        className={cn(
+          "h-14 w-full rounded-xl border border-white/15 bg-white/10 px-5 sm:pl-20",
+          "font-mono text-base text-white outline-none transition-all placeholder:text-white/35",
+          "focus:border-accent-bright focus:bg-accent-bright/10 focus:ring-4 focus:ring-accent-bright/15",
+        )}
+      />
+    </div>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+/*  Magnetic CTA button — follows cursor with a spring                  */
+/* ------------------------------------------------------------------ */
+
+function MagneticButton({ onClick }: { onClick: () => void }) {
+  const ref = useRef<HTMLButtonElement | null>(null)
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const springX = useSpring(x, { stiffness: 180, damping: 16, mass: 0.4 })
+  const springY = useSpring(y, { stiffness: 180, damping: 16, mass: 0.4 })
+
+  const onMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const el = ref.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const relX = e.clientX - (rect.left + rect.width / 2)
+    const relY = e.clientY - (rect.top + rect.height / 2)
+    x.set(relX * 0.25)
+    y.set(relY * 0.3)
+  }
+
+  const reset = () => {
+    x.set(0)
+    y.set(0)
+  }
+
+  return (
+    <motion.button
+      ref={ref}
+      type="button"
+      onClick={onClick}
+      onMouseMove={onMove}
+      onMouseLeave={reset}
+      whileTap={{ scale: 0.96 }}
+      style={{ x: springX, y: springY }}
+      className={cn(
+        "group inline-flex h-14 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-accent-bright px-7 sm:px-8",
+        "text-sm font-extrabold tracking-wide text-white shadow-glow-accent",
+        "hover:bg-accent-emerald hover:shadow-glow-accent-lg",
+        "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent-bright/35",
+      )}
+    >
+      Audit My Website Free
+      <motion.span
+        className="inline-flex"
+        animate={{ x: [0, 3, 0] }}
+        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <ArrowRight className="size-4" />
+      </motion.span>
+    </motion.button>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+/*  Trust + stat items                                                 */
+/* ------------------------------------------------------------------ */
 
 function TrustItem({ label }: { label: string }) {
   return (
@@ -121,18 +233,64 @@ function TrustItem({ label }: { label: string }) {
   )
 }
 
-function StatItem({ value, label }: { value: string; label: string }) {
+function StatItem({
+  value,
+  suffix,
+  label,
+}: {
+  value: number
+  suffix: string
+  label: string
+}) {
+  const [display, setDisplay] = useState(0)
+  const ref = useRef<HTMLDivElement | null>(null)
+  const started = useRef(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting || started.current) return
+          started.current = true
+          const duration = 1400
+          const start = performance.now()
+          const tick = (now: number) => {
+            const t = Math.min(1, (now - start) / duration)
+            const eased = 1 - Math.pow(1 - t, 3)
+            setDisplay(Math.round(value * eased))
+            if (t < 1) requestAnimationFrame(tick)
+          }
+          requestAnimationFrame(tick)
+        })
+      },
+      { threshold: 0.4 },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [value])
+
   return (
-    <div className="group border-l-2 border-white/10 pl-4 transition-colors hover:border-accent-bright/60">
-      <span className="block font-heading text-2xl font-black leading-none text-white transition-transform group-hover:-translate-y-0.5 sm:text-[26px]">
-        {value}
+    <motion.div
+      ref={ref}
+      whileHover={{ y: -2 }}
+      className="group border-l-2 border-white/10 pl-4 transition-colors hover:border-accent-bright/60"
+    >
+      <span className="block font-heading text-2xl font-black leading-none text-white sm:text-[26px]">
+        {display >= 1000 ? display.toLocaleString() : display}
+        {suffix}
       </span>
       <span className="mt-1.5 block text-[11px] uppercase tracking-wider text-white/45">
         {label}
       </span>
-    </div>
+    </motion.div>
   )
 }
+
+/* ------------------------------------------------------------------ */
+/*  Dashboard mock with mouse parallax                                  */
+/* ------------------------------------------------------------------ */
 
 const bars = [
   { label: "Usability", value: 45, color: "#ef4444" },
@@ -173,30 +331,43 @@ const issues = [
 ]
 
 function DashboardMock() {
-  const [barWidths, setBarWidths] = useState<number[]>(bars.map(() => 0))
-  const [visibleIssues, setVisibleIssues] = useState(0)
+  const wrapRef = useRef<HTMLDivElement | null>(null)
+  const px = useMotionValue(0)
+  const py = useMotionValue(0)
+  const rx = useSpring(useTransform(py, [-1, 1], [6, -6]), {
+    stiffness: 150,
+    damping: 18,
+  })
+  const ry = useSpring(useTransform(px, [-1, 1], [-8, 8]), {
+    stiffness: 150,
+    damping: 18,
+  })
 
-  useEffect(() => {
-    const barTimers = bars.map((b, i) =>
-      setTimeout(() => {
-        setBarWidths((prev) => {
-          const next = [...prev]
-          next[i] = b.value
-          return next
-        })
-      }, 400 + i * 200),
-    )
-    const issueTimers = issues.map((_, i) =>
-      setTimeout(() => setVisibleIssues(i + 1), 1600 + i * 600),
-    )
-    return () => {
-      barTimers.forEach(clearTimeout)
-      issueTimers.forEach(clearTimeout)
-    }
-  }, [])
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = wrapRef.current?.getBoundingClientRect()
+    if (!rect) return
+    px.set(((e.clientX - rect.left) / rect.width) * 2 - 1)
+    py.set(((e.clientY - rect.top) / rect.height) * 2 - 1)
+  }
+
+  const reset = () => {
+    px.set(0)
+    py.set(0)
+  }
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-2xl shadow-black/50">
+    <motion.div
+      ref={wrapRef}
+      onMouseMove={onMove}
+      onMouseLeave={reset}
+      style={{
+        rotateX: rx,
+        rotateY: ry,
+        transformPerspective: 1200,
+        transformStyle: "preserve-3d",
+      }}
+      className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-2xl shadow-black/50"
+    >
       {/* Browser chrome */}
       <div className="flex items-center gap-2.5 border-b border-white/10 bg-white/5 px-4 py-3">
         <div className="flex gap-1.5">
@@ -212,12 +383,17 @@ function DashboardMock() {
       <div className="p-5">
         {/* Score row */}
         <div className="mb-4 flex items-center gap-3.5 border-b border-white/10 pb-4">
-          <div className="flex size-14 flex-col items-center justify-center rounded-full border-[3px] border-warn">
+          <motion.div
+            className="flex size-14 flex-col items-center justify-center rounded-full border-[3px] border-warn"
+            initial={{ scale: 0, rotate: -90 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ delay: 0.6, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
             <span className="font-heading text-xl font-black leading-none text-white">
               58
             </span>
             <span className="text-[9px] font-bold text-warn">C+</span>
-          </div>
+          </motion.div>
           <div>
             <div className="text-sm font-bold text-white">
               Health Score: Needs Attention
@@ -236,11 +412,15 @@ function DashboardMock() {
                 {b.label}
               </span>
               <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/10">
-                <div
-                  className="h-full rounded-full transition-[width] duration-1000 ease-out"
-                  style={{
-                    width: `${barWidths[i]}%`,
-                    backgroundColor: b.color,
+                <motion.div
+                  className="h-full rounded-full"
+                  style={{ backgroundColor: b.color }}
+                  initial={{ width: "0%" }}
+                  animate={{ width: `${b.value}%` }}
+                  transition={{
+                    delay: 0.5 + i * 0.12,
+                    duration: 0.9,
+                    ease: [0.22, 1, 0.36, 1],
                   }}
                 />
               </div>
@@ -254,14 +434,15 @@ function DashboardMock() {
         {/* Issue cards */}
         <div className="flex flex-col gap-2">
           {issues.map((iss, i) => (
-            <div
+            <motion.div
               key={iss.title}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.3 + i * 0.18, duration: 0.45 }}
+              whileHover={{ x: 4 }}
               className={cn(
-                "rounded-xl border-l-[3px] bg-white/5 p-3 transition-all duration-500",
+                "rounded-xl border-l-[3px] bg-white/5 p-3",
                 iss.tone.border,
-                i < visibleIssues
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-2 opacity-0",
               )}
             >
               <div className="mb-1 flex items-center gap-1.5">
@@ -280,7 +461,7 @@ function DashboardMock() {
               <div className="text-xs font-bold leading-snug text-white">
                 {iss.title}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
@@ -303,6 +484,6 @@ function DashboardMock() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

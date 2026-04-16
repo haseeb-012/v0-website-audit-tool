@@ -2,6 +2,7 @@
 
 import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { useState } from "react"
+import { AnimatePresence, motion } from "motion/react"
 
 import { cn } from "@/lib/utils"
 
@@ -24,10 +25,25 @@ export function ContactForm() {
 
   if (status === "sent") {
     return (
-      <div className="flex flex-col items-center rounded-3xl border border-border-soft bg-white p-10 text-center shadow-sm">
-        <div className="mb-4 flex size-14 items-center justify-center rounded-full bg-accent-pale text-accent-emerald">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="flex flex-col items-center rounded-3xl border border-border-soft bg-white p-10 text-center shadow-sm"
+      >
+        <motion.div
+          initial={{ scale: 0, rotate: -45 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{
+            delay: 0.15,
+            type: "spring",
+            stiffness: 280,
+            damping: 16,
+          }}
+          className="mb-4 flex size-14 items-center justify-center rounded-full bg-accent-pale text-accent-emerald"
+        >
           <CheckCircle2 className="size-7" />
-        </div>
+        </motion.div>
         <h3 className="font-heading text-xl font-black text-ink">
           Message sent!
         </h3>
@@ -42,7 +58,7 @@ export function ContactForm() {
         >
           Send another message
         </button>
-      </div>
+      </motion.div>
     )
   }
 
@@ -117,16 +133,60 @@ export function ContactForm() {
         />
       </Field>
 
-      <button
+      <motion.button
         type="submit"
         disabled={status === "submitting"}
-        className="qa-press group mt-6 inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-brand px-5 text-sm font-extrabold text-white shadow-glow-brand hover:-translate-y-0.5 hover:bg-brand-mid focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/30 disabled:cursor-not-allowed disabled:opacity-70"
+        whileHover={status === "idle" ? { y: -2, scale: 1.01 } : undefined}
+        whileTap={status === "idle" ? { scale: 0.97 } : undefined}
+        transition={{ type: "spring", stiffness: 320, damping: 18 }}
+        className="mt-6 inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-brand px-5 text-sm font-extrabold text-white shadow-glow-brand hover:bg-brand-mid focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/30 disabled:cursor-not-allowed disabled:opacity-70"
       >
-        {status === "submitting" ? "Sending…" : "Send Message"}
-        {status !== "submitting" && (
-          <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-        )}
-      </button>
+        <AnimatePresence mode="wait" initial={false}>
+          {status === "submitting" ? (
+            <motion.span
+              key="loading"
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.2 }}
+              className="inline-flex items-center gap-2"
+            >
+              <motion.span
+                className="inline-block size-4 rounded-full border-2 border-white/40 border-t-white"
+                animate={{ rotate: 360 }}
+                transition={{
+                  duration: 0.9,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              />
+              Sending…
+            </motion.span>
+          ) : (
+            <motion.span
+              key="idle"
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.2 }}
+              className="inline-flex items-center gap-2"
+            >
+              Send Message
+              <motion.span
+                className="inline-flex"
+                animate={{ x: [0, 3, 0] }}
+                transition={{
+                  duration: 1.8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <ArrowRight className="size-4" />
+              </motion.span>
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </motion.button>
     </form>
   )
 }

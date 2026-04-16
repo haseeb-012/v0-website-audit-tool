@@ -1,7 +1,11 @@
+"use client"
+
 import { Check, X, Rocket } from "lucide-react"
+import { motion } from "motion/react"
 
 import { SectionHeader } from "@/components/site/section-header"
 import { cn } from "@/lib/utils"
+import { fadeUpSoft, stagger } from "@/components/motion/primitives"
 
 type Cell =
   | { kind: "yes" }
@@ -96,7 +100,13 @@ export function Comparison() {
           align="center"
         />
 
-        <div className="mt-12 overflow-hidden rounded-2xl shadow-xl shadow-black/[0.06]">
+        <motion.div
+          className="mt-12 overflow-hidden rounded-2xl shadow-xl shadow-black/[0.06]"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           {/* Desktop table */}
           <table className="hidden w-full border-collapse md:table">
             <thead>
@@ -115,10 +125,16 @@ export function Comparison() {
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <motion.tbody
+              variants={stagger(0.08, 0.05)}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-80px" }}
+            >
               {rows.map((r, i) => (
-                <tr
+                <motion.tr
                   key={r.feature}
+                  variants={fadeUpSoft}
                   className={cn(
                     "transition-colors hover:bg-brand-pale/60",
                     i < rows.length - 1 && "border-b border-border-soft",
@@ -127,9 +143,9 @@ export function Comparison() {
                   <td className="px-6 py-4 text-sm text-ink">{r.feature}</td>
                   <td className="px-6 py-4">{renderCell(r.qa)}</td>
                   <td className="px-6 py-4">{renderCell(r.others)}</td>
-                </tr>
+                </motion.tr>
               ))}
-            </tbody>
+            </motion.tbody>
           </table>
 
           {/* Mobile card list */}
@@ -154,7 +170,7 @@ export function Comparison() {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )
