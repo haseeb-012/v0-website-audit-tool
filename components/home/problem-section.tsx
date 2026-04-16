@@ -1,6 +1,10 @@
+"use client"
+
 import { Frown, Smartphone, AlertTriangle, Clock } from "lucide-react"
+import { motion } from "motion/react"
 
 import { SectionHeader } from "@/components/site/section-header"
+import { fadeUp, stagger } from "@/components/motion/primitives"
 
 const problems = [
   {
@@ -34,8 +38,8 @@ const problems = [
 ]
 
 /**
- * Four-card problem framing section with a red top-accent gradient bar
- * on each card — same pattern as the reference design.
+ * Four-card problem framing section. Cards stagger in on scroll and
+ * lift/tilt on hover for a tactile, modern feel.
  */
 export function ProblemSection() {
   return (
@@ -52,28 +56,42 @@ export function ProblemSection() {
           description="Broken buttons, confusing layouts, and slow mobile pages don't announce themselves. Your customers just leave — and never tell you why."
         />
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2">
+        <motion.div
+          className="mt-12 grid gap-5 md:grid-cols-2"
+          variants={stagger(0.1, 0.12)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+        >
           {problems.map(({ icon: Icon, title, description, stat }) => (
-            <article
+            <motion.article
               key={title}
-              className="group relative overflow-hidden rounded-2xl border border-border-soft bg-white p-7 transition-all hover:-translate-y-1 hover:border-brand hover:shadow-xl hover:shadow-brand/10"
+              variants={fadeUp}
+              whileHover={{ y: -6 }}
+              transition={{ type: "spring", stiffness: 260, damping: 20 }}
+              tabIndex={0}
+              className="group relative overflow-hidden rounded-2xl border border-border-soft bg-white p-7 outline-none hover:border-brand hover:shadow-card-hover focus-visible:border-brand focus-visible:ring-4 focus-visible:ring-brand/15"
             >
               <span className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-danger to-[#f97316]" />
-              <div className="mb-4 inline-flex size-11 items-center justify-center rounded-xl bg-danger-pale text-danger">
+              <motion.div
+                whileHover={{ rotate: -8, scale: 1.12 }}
+                transition={{ type: "spring", stiffness: 320, damping: 15 }}
+                className="mb-4 inline-flex size-11 items-center justify-center rounded-xl bg-danger-pale text-danger"
+              >
                 <Icon className="size-5" />
-              </div>
-              <h3 className="font-heading text-[17px] font-extrabold leading-snug text-ink">
+              </motion.div>
+              <h3 className="font-heading text-lg font-extrabold leading-snug text-ink">
                 {title}
               </h3>
-              <p className="mt-2 text-[14px] leading-[1.68] text-body">
+              <p className="mt-2 text-sm leading-relaxed text-body">
                 {description}
               </p>
               <span className="mt-4 inline-block rounded-full bg-danger-pale px-3 py-1 text-xs font-bold text-danger">
                 {stat}
               </span>
-            </article>
+            </motion.article>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

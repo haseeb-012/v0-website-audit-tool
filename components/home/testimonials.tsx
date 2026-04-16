@@ -1,6 +1,10 @@
+"use client"
+
 import { Star } from "lucide-react"
+import { motion } from "motion/react"
 
 import { SectionHeader } from "@/components/site/section-header"
+import { fadeUp, stagger } from "@/components/motion/primitives"
 
 const testimonials = [
   {
@@ -38,11 +42,21 @@ export function Testimonials() {
           title="Builders trust QAlaunch"
           description="From Lovable apps to Shopify stores — QAlaunch finds the issues that were silently hurting real customers."
         />
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
+        <motion.div
+          className="mt-12 grid gap-5 md:grid-cols-3"
+          variants={stagger(0.1, 0.12)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+        >
           {testimonials.map((t) => (
-            <figure
+            <motion.figure
               key={t.name}
-              className="flex flex-col rounded-2xl border border-border-soft bg-white p-7 transition-all hover:-translate-y-1 hover:border-brand"
+              variants={fadeUp}
+              whileHover={{ y: -6 }}
+              transition={{ type: "spring", stiffness: 260, damping: 20 }}
+              tabIndex={0}
+              className="flex flex-col rounded-2xl border border-border-soft bg-white p-7 outline-none hover:border-brand hover:shadow-card-hover focus-visible:border-brand focus-visible:ring-4 focus-visible:ring-brand/15"
             >
               <div
                 className="mb-4 flex gap-0.5 text-[#F59E0B]"
@@ -57,7 +71,7 @@ export function Testimonials() {
                   />
                 ))}
               </div>
-              <blockquote className="flex-1 text-[15px] italic leading-[1.7] text-ink">
+              <blockquote className="flex-1 text-sm italic leading-relaxed text-ink sm:text-base">
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
               <figcaption className="mt-5 flex items-center gap-3">
@@ -71,9 +85,9 @@ export function Testimonials() {
                   <div className="text-xs text-muted-ink">{t.role}</div>
                 </div>
               </figcaption>
-            </figure>
+            </motion.figure>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
