@@ -42,7 +42,8 @@ export function Testimonials() {
           {testimonials.map((t) => (
             <figure
               key={t.name}
-              className="flex flex-col rounded-2xl border border-border-soft bg-white p-7 transition-all hover:-translate-y-1 hover:border-brand"
+              tabIndex={0}
+              className="qa-press flex flex-col rounded-2xl border border-border-soft bg-white p-7 outline-none hover:-translate-y-1 hover:border-brand hover:shadow-card-hover focus-visible:border-brand focus-visible:ring-4 focus-visible:ring-brand/15"
             >
               <div
                 className="mb-4 flex gap-0.5 text-[#F59E0B]"
@@ -57,7 +58,7 @@ export function Testimonials() {
                   />
                 ))}
               </div>
-              <blockquote className="flex-1 text-[15px] italic leading-[1.7] text-ink">
+              <blockquote className="flex-1 text-sm italic leading-relaxed text-ink sm:text-base">
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
               <figcaption className="mt-5 flex items-center gap-3">

@@ -51,7 +51,7 @@ export function ContactForm() {
       onSubmit={handleSubmit}
       className="rounded-3xl border border-border-soft bg-white p-8 shadow-sm md:p-10"
     >
-      <h3 className="mb-6 font-heading text-[22px] font-black text-ink">
+      <h3 className="mb-6 font-heading text-2xl font-black tracking-tight text-ink">
         Send us a message
       </h3>
 
@@ -120,10 +120,12 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand px-5 py-4 text-[15px] font-extrabold text-white transition-all hover:-translate-y-0.5 hover:bg-brand-mid disabled:cursor-not-allowed disabled:opacity-70"
+        className="qa-press group mt-6 inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-brand px-5 text-sm font-extrabold text-white shadow-glow-brand hover:-translate-y-0.5 hover:bg-brand-mid focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/30 disabled:cursor-not-allowed disabled:opacity-70"
       >
         {status === "submitting" ? "Sending…" : "Send Message"}
-        {status !== "submitting" && <ArrowRight className="size-4" />}
+        {status !== "submitting" && (
+          <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+        )}
       </button>
     </form>
   )
@@ -145,7 +147,7 @@ function Field({
 }) {
   return (
     <label className={cn("block", className)}>
-      <span className="mb-1.5 block text-[13px] font-bold text-ink">
+      <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted-ink">
         {label} {required && <span className="text-danger">*</span>}
       </span>
       {children}

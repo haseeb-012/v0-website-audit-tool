@@ -32,7 +32,7 @@ export function SectionHeader({
     >
       <div
         className={cn(
-          "mb-3 text-[11px] font-bold uppercase tracking-[2.5px]",
+          "mb-3 text-xs font-bold uppercase tracking-widest",
           tone === "dark" ? "text-brand" : "text-accent-bright",
         )}
       >
@@ -40,7 +40,7 @@ export function SectionHeader({
       </div>
       <h2
         className={cn(
-          "font-heading text-[clamp(1.75rem,3.6vw,2.75rem)] font-black leading-[1.1] tracking-[-0.02em] text-balance",
+          "font-heading text-[clamp(1.75rem,3.6vw,2.75rem)] font-black leading-tight tracking-tight text-balance",
           tone === "dark" ? "text-ink" : "text-white",
         )}
       >
@@ -49,7 +49,7 @@ export function SectionHeader({
       {description && (
         <p
           className={cn(
-            "mt-4 text-[17px] leading-[1.72] text-pretty",
+            "mt-4 text-base leading-relaxed text-pretty sm:text-lg",
             align === "center" ? "mx-auto" : "",
             "max-w-xl",
             tone === "dark" ? "text-body" : "text-white/60",

@@ -36,14 +36,14 @@ export function HowItWorks() {
           <div className="pointer-events-none absolute left-[16.7%] right-[16.7%] top-[33px] hidden h-px bg-gradient-to-r from-accent-bright/50 via-accent-bright/30 to-brand-mid/50 md:block" />
 
           {steps.map((step) => (
-            <div key={step.n} className="relative px-4 text-center">
-              <div className="relative z-10 mx-auto mb-5 flex size-16 items-center justify-center rounded-full border-[2.5px] border-accent-bright/45 bg-gradient-to-br from-brand to-brand-mid font-heading text-[22px] font-black text-white">
+            <div key={step.n} className="group relative px-4 text-center">
+              <div className="relative z-10 mx-auto mb-5 flex size-16 items-center justify-center rounded-full border-[2.5px] border-accent-bright/45 bg-gradient-to-br from-brand to-brand-mid font-heading text-2xl font-black text-white shadow-glow-brand transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-105">
                 {step.n}
               </div>
-              <h3 className="mb-2 font-heading text-[17px] font-extrabold text-white">
+              <h3 className="mb-2 font-heading text-lg font-extrabold text-white">
                 {step.title}
               </h3>
-              <p className="mx-auto max-w-xs text-[14px] leading-[1.65] text-white/55">
+              <p className="mx-auto max-w-xs text-sm leading-relaxed text-white/55">
                 {step.description}
               </p>
             </div>

@@ -33,6 +33,14 @@
   --warn: #d97706;
   --warn-pale: #fffbeb;
 
+  /* Elevation + glow tokens (reusable shadow utilities) */
+  --shadow-card: 0 10px 30px -12px rgba(15, 23, 42, 0.12);
+  --shadow-card-hover: 0 24px 50px -18px rgba(24, 71, 168, 0.22);
+  --shadow-glow-accent: 0 12px 32px -10px rgba(22, 163, 74, 0.55);
+  --shadow-glow-accent-lg: 0 20px 48px -12px rgba(22, 163, 74, 0.7);
+  --shadow-glow-brand: 0 12px 36px -10px rgba(24, 71, 168, 0.35);
+  --shadow-surface-dark: 0 24px 60px -24px rgba(0, 0, 0, 0.55);
+
   /* shadcn compatibility tokens (kept for any shadcn primitives in use) */
   --background: #ffffff;
   --foreground: var(--ink);
@@ -84,6 +92,14 @@
   --color-warn: var(--warn);
   --color-warn-pale: var(--warn-pale);
 
+  /* Named shadow utilities — use as shadow-card, shadow-glow-accent, etc. */
+  --shadow-card: var(--shadow-card);
+  --shadow-card-hover: var(--shadow-card-hover);
+  --shadow-glow-accent: var(--shadow-glow-accent);
+  --shadow-glow-accent-lg: var(--shadow-glow-accent-lg);
+  --shadow-glow-brand: var(--shadow-glow-brand);
+  --shadow-surface-dark: var(--shadow-surface-dark);
+
   /* shadcn tokens */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -122,9 +138,21 @@
     @apply bg-background text-ink font-sans antialiased;
     line-height: 1.65;
   }
+  /* Respect users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
-/* Subtle animations used by the hero mock dashboard and the ticker. */
+/* ─────────────────────────────────────────────
+   Animations — hero mock, ticker, reveals, microinteractions
+   ───────────────────────────────────────────── */
 @keyframes qa-blink {
   0%,
   100% {
@@ -158,6 +186,37 @@
     transform: rotate(360deg);
   }
 }
+@keyframes qa-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes qa-reveal-soft {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes qa-pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.35);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(34, 197, 94, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
 
 .qa-blink {
   animation: qa-blink 2s infinite;
@@ -173,6 +232,40 @@
 }
 .qa-spin {
   animation: qa-spin 0.9s linear infinite;
+}
+.qa-pulse-ring {
+  animation: qa-pulse-ring 2.4s infinite;
+}
+
+/* Entrance reveals — applied on mount with optional delay utilities */
+.qa-reveal {
+  animation: qa-reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.qa-reveal-soft {
+  animation: qa-reveal-soft 0.55s ease-out both;
+}
+.qa-delay-1 {
+  animation-delay: 0.08s;
+}
+.qa-delay-2 {
+  animation-delay: 0.16s;
+}
+.qa-delay-3 {
+  animation-delay: 0.24s;
+}
+.qa-delay-4 {
+  animation-delay: 0.32s;
+}
+
+/* Shared press microinteraction — use on any tappable button */
+.qa-press {
+  transition-property: transform, background-color, box-shadow, border-color,
+    color;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  transition-duration: 200ms;
+}
+.qa-press:active {
+  transform: translateY(1px) scale(0.985);
 }
 
 .qa-hero-grid {

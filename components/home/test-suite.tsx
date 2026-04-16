@@ -95,21 +95,23 @@ export function TestSuite() {
             ({ icon: Icon, iconTone, title, description, tags, priority }) => (
               <article
                 key={title}
+                tabIndex={0}
                 className={cn(
-                  "rounded-2xl border border-border-soft bg-white p-6 transition-all",
-                  "hover:-translate-y-1 hover:border-brand hover:shadow-xl hover:shadow-brand/10",
+                  "qa-press group rounded-2xl border border-border-soft bg-white p-6 outline-none",
+                  "hover:-translate-y-1 hover:border-brand hover:shadow-card-hover",
+                  "focus-visible:border-brand focus-visible:ring-4 focus-visible:ring-brand/15",
                 )}
               >
                 <div className="mb-3 flex items-center gap-3">
                   <div
                     className={cn(
-                      "flex size-11 items-center justify-center rounded-xl",
+                      "flex size-11 items-center justify-center rounded-xl transition-transform duration-300 group-hover:-rotate-3 group-hover:scale-105",
                       iconTone,
                     )}
                   >
                     <Icon className="size-5" />
                   </div>
-                  <h3 className="font-heading text-[15px] font-extrabold text-ink">
+                  <h3 className="font-heading text-base font-extrabold text-ink">
                     {title}
                   </h3>
                   <span
@@ -123,14 +125,14 @@ export function TestSuite() {
                     {priority === "top" ? "Top Priority" : "Core Check"}
                   </span>
                 </div>
-                <p className="mb-3.5 text-[13.5px] leading-[1.65] text-body">
+                <p className="mb-4 text-sm leading-relaxed text-body">
                   {description}
                 </p>
                 <div className="flex flex-wrap gap-1.5">
                   {tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-brand-pale px-2.5 py-1 text-[11px] font-semibold text-brand"
+                      className="rounded-full bg-brand-pale px-2.5 py-1 text-[11px] font-semibold text-brand transition-colors group-hover:bg-brand group-hover:text-white"
                     >
                       {tag}
                     </span>

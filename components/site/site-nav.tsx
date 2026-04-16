@@ -70,12 +70,17 @@ export function SiteNav() {
             type="button"
             onClick={handleAuditClick}
             className={cn(
-              "ml-3 inline-flex h-9 items-center gap-1.5 rounded-lg bg-accent-bright px-4 text-[13px] font-semibold text-white",
-              "transition-all hover:bg-accent-emerald hover:shadow-md hover:shadow-accent-bright/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-bright/40",
+              "qa-press group ml-3 inline-flex h-9 items-center gap-1.5 rounded-lg bg-accent-bright px-4 text-[13px] font-semibold text-white",
+              "hover:bg-accent-emerald hover:shadow-md hover:shadow-accent-bright/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-bright/40",
             )}
           >
             Free audit
-            <span aria-hidden="true" className="-mr-0.5">→</span>
+            <span
+              aria-hidden="true"
+              className="-mr-0.5 transition-transform group-hover:translate-x-0.5"
+            >
+              →
+            </span>
           </button>
         </nav>
 
@@ -115,9 +120,10 @@ export function SiteNav() {
             <button
               type="button"
               onClick={handleAuditClick}
-              className="mt-2 rounded-xl bg-accent-bright px-5 py-3 text-center text-sm font-bold text-white"
+              className="qa-press mt-2 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-accent-bright px-5 text-sm font-bold text-white shadow-glow-accent hover:bg-accent-emerald focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent-bright/35"
             >
-              Audit My Website Free →
+              Audit My Website Free
+              <span aria-hidden="true">→</span>
             </button>
           </div>
         </div>

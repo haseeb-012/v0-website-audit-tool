@@ -1,6 +1,7 @@
 import { Check, X, Rocket } from "lucide-react"
 
 import { SectionHeader } from "@/components/site/section-header"
+import { cn } from "@/lib/utils"
 
 type Cell =
   | { kind: "yes" }
@@ -77,7 +78,7 @@ function renderCell(cell: Cell) {
         aria-label="No"
       />
     )
-  return <span className="text-[13px] italic text-muted-ink">{cell.label}</span>
+  return <span className="text-sm italic text-muted-ink">{cell.label}</span>
 }
 
 export function Comparison() {
@@ -118,15 +119,14 @@ export function Comparison() {
               {rows.map((r, i) => (
                 <tr
                   key={r.feature}
-                  className={i < rows.length - 1 ? "border-b border-border-soft" : ""}
+                  className={cn(
+                    "transition-colors hover:bg-brand-pale/60",
+                    i < rows.length - 1 && "border-b border-border-soft",
+                  )}
                 >
-                  <td className="bg-white px-6 py-3.5 text-sm text-ink">
-                    {r.feature}
-                  </td>
-                  <td className="bg-white px-6 py-3.5">{renderCell(r.qa)}</td>
-                  <td className="bg-white px-6 py-3.5">
-                    {renderCell(r.others)}
-                  </td>
+                  <td className="px-6 py-4 text-sm text-ink">{r.feature}</td>
+                  <td className="px-6 py-4">{renderCell(r.qa)}</td>
+                  <td className="px-6 py-4">{renderCell(r.others)}</td>
                 </tr>
               ))}
             </tbody>

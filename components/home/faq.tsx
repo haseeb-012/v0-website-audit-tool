@@ -55,41 +55,46 @@ export function FAQ({
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   return (
-    <section className={cn("px-5 py-20 md:px-12", className)}>
+    <section className={cn("px-5 py-20 md:px-12 md:py-24", className)}>
       <div className="mx-auto max-w-3xl">
-        <h2 className="mb-10 text-center font-heading text-[clamp(1.5rem,3vw,2.25rem)] font-black leading-tight tracking-[-0.02em] text-ink">
+        <h2 className="mb-10 text-center font-heading text-[clamp(1.5rem,3vw,2.25rem)] font-black leading-tight tracking-tight text-ink">
           {title}
         </h2>
-        <div className="flex flex-col gap-2.5">
+        <div className="flex flex-col gap-3">
           {items.map((item, i) => {
             const open = openIndex === i
             return (
               <div
                 key={item.q}
-                className="overflow-hidden rounded-xl border border-border-soft bg-white"
+                className={cn(
+                  "overflow-hidden rounded-xl border bg-white transition-colors",
+                  open
+                    ? "border-brand shadow-card"
+                    : "border-border-soft hover:border-brand/40",
+                )}
               >
                 <button
                   type="button"
                   onClick={() => setOpenIndex(open ? null : i)}
                   aria-expanded={open}
-                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-bold text-ink transition-colors hover:text-brand"
+                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-bold text-ink transition-colors hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand/40"
                 >
-                  <span className="text-[15px] leading-snug">{item.q}</span>
+                  <span className="text-base leading-snug">{item.q}</span>
                   <ChevronDown
                     className={cn(
-                      "size-5 shrink-0 text-muted-ink transition-transform",
-                      open && "rotate-180",
+                      "size-5 shrink-0 text-muted-ink transition-transform duration-300",
+                      open && "rotate-180 text-brand",
                     )}
                   />
                 </button>
                 <div
                   className={cn(
-                    "grid transition-all duration-200",
+                    "grid transition-all duration-300",
                     open ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
                   )}
                 >
                   <div className="overflow-hidden">
-                    <p className="px-6 pb-5 text-[14px] leading-[1.7] text-body">
+                    <p className="px-6 pb-5 text-sm leading-relaxed text-body">
                       {item.a}
                     </p>
                   </div>

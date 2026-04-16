@@ -34,21 +34,21 @@ function PlanCard({ plan }: { plan: Plan }) {
   return (
     <article
       className={cn(
-        "relative flex flex-col rounded-3xl border bg-white p-8 transition-all",
-        "hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-brand/15",
+        "relative flex flex-col rounded-3xl border bg-white p-8 transition-all duration-300",
+        "hover:-translate-y-1.5 hover:shadow-card-hover",
         plan.popular
-          ? "border-brand border-2 bg-gradient-to-b from-brand-pale to-white"
+          ? "border-2 border-brand bg-gradient-to-b from-brand-pale to-white shadow-glow-brand"
           : "border-border-soft",
       )}
     >
       {plan.popular && (
-        <span className="absolute -top-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-1 whitespace-nowrap rounded-full bg-gradient-to-r from-brand to-brand-mid px-4 py-1 text-[10.5px] font-extrabold tracking-wide text-white">
+        <span className="absolute -top-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-1 whitespace-nowrap rounded-full bg-gradient-to-r from-brand to-brand-mid px-4 py-1 text-[10.5px] font-extrabold tracking-wide text-white shadow-glow-brand">
           <Star className="size-3" fill="currentColor" strokeWidth={0} />
           Most Popular
         </span>
       )}
 
-      <div className="mb-3 text-[11px] font-bold uppercase tracking-[1.8px] text-muted-ink">
+      <div className="mb-3 text-xs font-bold uppercase tracking-widest text-muted-ink">
         {plan.tier}
       </div>
 
@@ -68,11 +68,11 @@ function PlanCard({ plan }: { plan: Plan }) {
         </span>
       </div>
 
-      <div className="mt-1.5 text-[13.5px] text-body">{plan.pages}</div>
+      <div className="mt-1.5 text-sm text-body">{plan.pages}</div>
 
       <div
         className={cn(
-          "mt-3 inline-flex w-fit items-center gap-1 rounded-full px-3 py-1 text-[11.5px] font-bold",
+          "mt-3 inline-flex w-fit items-center gap-1 rounded-full px-3 py-1 text-xs font-bold",
           plan.delivery.icon === "bolt"
             ? "bg-accent-pale text-accent-emerald"
             : "bg-[#E0E7FF] text-[#3730A3]",
@@ -88,9 +88,12 @@ function PlanCard({ plan }: { plan: Plan }) {
         {plan.features.map((f) => (
           <li
             key={f}
-            className="flex items-start gap-2 py-2 text-[13px] leading-snug text-ink"
+            className="flex items-start gap-2 py-2 text-sm leading-snug text-ink"
           >
-            <Check className="mt-0.5 size-3.5 shrink-0 text-accent-bright" strokeWidth={3} />
+            <Check
+              className="mt-0.5 size-3.5 shrink-0 text-accent-bright"
+              strokeWidth={3}
+            />
             {f}
           </li>
         ))}
@@ -103,14 +106,14 @@ function PlanCard({ plan }: { plan: Plan }) {
 
 function CTAButton({ plan }: { plan: Plan }) {
   const baseClasses =
-    "inline-flex w-full items-center justify-center rounded-xl px-4 py-3.5 font-extrabold text-sm transition-all"
+    "qa-press inline-flex h-12 w-full items-center justify-center rounded-xl px-4 font-extrabold text-sm focus-visible:outline-none focus-visible:ring-4"
   const variantClasses = {
     primary:
-      "bg-brand text-white hover:-translate-y-0.5 hover:bg-brand-mid hover:shadow-lg hover:shadow-brand/30",
-    soft: "bg-brand-pale text-brand hover:bg-[#DCE9FF]",
+      "bg-brand text-white shadow-glow-brand hover:-translate-y-0.5 hover:bg-brand-mid focus-visible:ring-brand/35",
+    soft: "bg-brand-pale text-brand hover:bg-[#DCE9FF] focus-visible:ring-brand/25",
     outline:
-      "border border-border-soft bg-white text-ink hover:border-brand hover:text-brand",
-    dark: "bg-slate-deep text-white hover:bg-ink",
+      "border border-border-soft bg-white text-ink hover:border-brand hover:text-brand focus-visible:ring-brand/20",
+    dark: "bg-slate-deep text-white hover:bg-ink focus-visible:ring-slate-deep/40",
   }[plan.cta.variant]
 
   return (

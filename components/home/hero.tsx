@@ -30,18 +30,18 @@ export function Hero() {
 
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-16 xl:gap-20">
         <div className="flex flex-col">
-          <div className="mb-7 inline-flex w-fit items-center gap-2 rounded-full border border-accent-bright/25 bg-accent-bright/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[1.2px] text-[#4ade80] sm:text-[12px]">
+          <div className="qa-reveal mb-7 inline-flex w-fit items-center gap-2 rounded-full border border-accent-bright/25 bg-accent-bright/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#4ade80]">
             <span className="qa-blink size-[7px] rounded-full bg-[#4ade80]" />
             9 Years of QA Expertise — Now Automated
           </div>
 
-          <h1 className="font-heading text-[clamp(2.25rem,5.2vw,4rem)] font-black leading-[1.05] tracking-[-0.02em] text-balance text-white">
+          <h1 className="qa-reveal qa-delay-1 font-heading text-[clamp(2.25rem,5.2vw,4rem)] font-black leading-[1.05] tracking-tight text-balance text-white">
             Is your website{" "}
             <span className="text-accent-bright">actually working</span> for
             your customers?
           </h1>
 
-          <p className="mt-6 max-w-xl text-[16px] leading-[1.7] text-white/65 sm:text-[17px] sm:leading-[1.75]">
+          <p className="qa-reveal qa-delay-2 mt-6 max-w-xl text-base leading-relaxed text-white/65 sm:text-lg">
             Get a free expert website audit in 60 seconds. We test usability,
             broken functionality, UI bugs, mobile responsiveness, and SEO —
             then give you a clear, actionable report your developer can fix
@@ -49,7 +49,7 @@ export function Hero() {
           </p>
 
           {/* URL capture */}
-          <div className="mt-10 rounded-2xl border border-white/15 bg-white/[0.06] p-3 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.6)] sm:p-4">
+          <div className="qa-reveal qa-delay-3 mt-10 rounded-2xl border border-white/15 bg-white/[0.06] p-3 shadow-surface-dark sm:p-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
               <div className="relative flex-1">
                 <span className="pointer-events-none absolute left-4 top-1/2 hidden -translate-y-1/2 font-mono text-xs text-white/30 sm:block">
@@ -65,8 +65,8 @@ export function Hero() {
                   type="url"
                   placeholder="yourwebsite.com"
                   className={cn(
-                    "h-14 w-full rounded-xl border border-white/15 bg-white/10 px-5 sm:pl-[84px]",
-                    "font-mono text-[15px] text-white outline-none transition-all placeholder:text-white/35",
+                    "h-14 w-full rounded-xl border border-white/15 bg-white/10 px-5 sm:pl-20",
+                    "font-mono text-base text-white outline-none transition-all placeholder:text-white/35",
                     "focus:border-accent-bright focus:bg-accent-bright/10 focus:ring-4 focus:ring-accent-bright/15",
                   )}
                 />
@@ -75,15 +75,14 @@ export function Hero() {
                 type="button"
                 onClick={submit}
                 className={cn(
-                  "group inline-flex h-14 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-accent-bright px-7 sm:px-8",
-                  "text-[15px] font-extrabold tracking-wide text-white transition-all",
-                  "shadow-[0_10px_30px_-8px_rgba(22,163,74,0.55)]",
-                  "hover:-translate-y-0.5 hover:bg-accent-emerald hover:shadow-[0_16px_40px_-8px_rgba(22,163,74,0.75)]",
+                  "qa-press group inline-flex h-14 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-accent-bright px-7 sm:px-8",
+                  "text-sm font-extrabold tracking-wide text-white shadow-glow-accent",
+                  "hover:-translate-y-0.5 hover:bg-accent-emerald hover:shadow-glow-accent-lg",
                   "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent-bright/35",
                 )}
               >
                 Audit My Website Free
-                <ArrowRight className="size-[18px] transition-transform group-hover:translate-x-0.5" />
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
               </button>
             </div>
             <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 px-1">
@@ -94,7 +93,7 @@ export function Hero() {
           </div>
 
           {/* Stats */}
-          <div className="mt-10 grid grid-cols-2 gap-6 sm:flex sm:flex-wrap sm:gap-8">
+          <div className="qa-reveal qa-delay-4 mt-10 grid grid-cols-2 gap-6 sm:flex sm:flex-wrap sm:gap-8">
             <StatItem value="1,000+" label="Websites Audited" />
             <StatItem value="35+" label="Quality Checks" />
             <StatItem value="60s" label="Free Audit Time" />
@@ -103,7 +102,7 @@ export function Hero() {
         </div>
 
         {/* Animated dashboard mock */}
-        <div className="relative hidden lg:block">
+        <div className="qa-reveal qa-delay-2 relative hidden lg:block">
           <DashboardMock />
         </div>
       </div>
@@ -124,8 +123,8 @@ function TrustItem({ label }: { label: string }) {
 
 function StatItem({ value, label }: { value: string; label: string }) {
   return (
-    <div className="border-l-2 border-white/10 pl-4">
-      <span className="block font-heading text-[24px] font-black leading-none text-white sm:text-[26px]">
+    <div className="group border-l-2 border-white/10 pl-4 transition-colors hover:border-accent-bright/60">
+      <span className="block font-heading text-2xl font-black leading-none text-white transition-transform group-hover:-translate-y-0.5 sm:text-[26px]">
         {value}
       </span>
       <span className="mt-1.5 block text-[11px] uppercase tracking-wider text-white/45">
@@ -197,7 +196,7 @@ function DashboardMock() {
   }, [])
 
   return (
-    <div className="overflow-hidden rounded-[20px] border border-white/10 bg-white/5 shadow-2xl shadow-black/50">
+    <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-2xl shadow-black/50">
       {/* Browser chrome */}
       <div className="flex items-center gap-2.5 border-b border-white/10 bg-white/5 px-4 py-3">
         <div className="flex gap-1.5">
@@ -205,7 +204,7 @@ function DashboardMock() {
           <span className="size-2.5 rounded-full bg-[#FFBD2E]" />
           <span className="size-2.5 rounded-full bg-[#28CA41]" />
         </div>
-        <div className="flex-1 rounded-md bg-white/10 px-3 py-1 text-[12px] font-mono text-white/40">
+        <div className="flex-1 rounded-md bg-white/10 px-3 py-1 font-mono text-xs text-white/40">
           yourwebsite.com — Live Audit
         </div>
       </div>
@@ -220,7 +219,7 @@ function DashboardMock() {
             <span className="text-[9px] font-bold text-warn">C+</span>
           </div>
           <div>
-            <div className="text-[13px] font-bold text-white">
+            <div className="text-sm font-bold text-white">
               Health Score: Needs Attention
             </div>
             <div className="mt-0.5 text-[11px] text-white/40">
@@ -238,7 +237,7 @@ function DashboardMock() {
               </span>
               <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/10">
                 <div
-                  className="h-full rounded-full transition-[width] duration-[1200ms] ease-out"
+                  className="h-full rounded-full transition-[width] duration-1000 ease-out"
                   style={{
                     width: `${barWidths[i]}%`,
                     backgroundColor: b.color,
@@ -278,7 +277,7 @@ function DashboardMock() {
                   {iss.cat}
                 </span>
               </div>
-              <div className="text-[12px] font-bold leading-snug text-white">
+              <div className="text-xs font-bold leading-snug text-white">
                 {iss.title}
               </div>
             </div>
