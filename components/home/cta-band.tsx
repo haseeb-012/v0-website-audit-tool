@@ -34,10 +34,10 @@ export function CtaBand() {
         <button
           type="button"
           onClick={focusAudit}
-          className="mt-9 inline-flex items-center gap-2 rounded-2xl bg-accent-bright px-11 py-4 text-base font-extrabold text-white transition-all hover:-translate-y-1 hover:bg-accent-emerald hover:shadow-xl hover:shadow-accent-bright/40"
+          className="group mt-10 inline-flex h-14 items-center justify-center gap-2 rounded-2xl bg-accent-bright px-10 text-[15px] font-extrabold tracking-wide text-white transition-all shadow-[0_16px_40px_-10px_rgba(22,163,74,0.6)] hover:-translate-y-0.5 hover:bg-accent-emerald hover:shadow-[0_20px_50px_-10px_rgba(22,163,74,0.8)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent-bright/35 sm:h-[60px] sm:px-12 sm:text-base"
         >
           Audit My Website Free
-          <ArrowRight className="size-4" />
+          <ArrowRight className="size-[18px] transition-transform group-hover:translate-x-0.5" />
         </button>
         <p className="mt-4 text-[13px] text-white/45">
           Trusted by founders building with Lovable, Bolt, Replit, and Shopify
