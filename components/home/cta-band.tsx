@@ -1,0 +1,48 @@
+"use client"
+
+import { ArrowRight } from "lucide-react"
+import { useRouter } from "next/navigation"
+
+/**
+ * Full-width conversion CTA band. Dark brand gradient with a subtle
+ * dot-grid overlay. Button returns the user to the hero audit input.
+ */
+export function CtaBand() {
+  const router = useRouter()
+
+  const focusAudit = () => {
+    router.push("/#audit-input")
+    requestAnimationFrame(() => {
+      const input = document.getElementById("audit-input")
+      input?.scrollIntoView({ behavior: "smooth", block: "center" })
+      setTimeout(() => (input as HTMLInputElement | null)?.focus(), 500)
+    })
+  }
+
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-br from-brand-dark to-brand px-5 py-20 text-center md:px-12 md:py-24">
+      <div className="qa-cta-grid pointer-events-none absolute inset-0" />
+      <div className="relative z-10 mx-auto max-w-3xl">
+        <h2 className="font-heading text-[clamp(1.875rem,4vw,2.875rem)] font-black leading-[1.1] tracking-[-0.02em] text-balance text-white">
+          Stop guessing what&apos;s wrong
+          <br className="hidden md:block" /> with your website.
+        </h2>
+        <p className="mx-auto mt-4 max-w-xl text-[18px] text-white/70">
+          Free audit in 60 seconds. No signup needed. Full expert report from
+          just $9.
+        </p>
+        <button
+          type="button"
+          onClick={focusAudit}
+          className="mt-9 inline-flex items-center gap-2 rounded-2xl bg-accent-bright px-11 py-4 text-base font-extrabold text-white transition-all hover:-translate-y-1 hover:bg-accent-emerald hover:shadow-xl hover:shadow-accent-bright/40"
+        >
+          Audit My Website Free
+          <ArrowRight className="size-4" />
+        </button>
+        <p className="mt-4 text-[13px] text-white/45">
+          Trusted by founders building with Lovable, Bolt, Replit, and Shopify
+        </p>
+      </div>
+    </section>
+  )
+}

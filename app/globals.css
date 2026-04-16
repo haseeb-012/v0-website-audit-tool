@@ -1,0 +1,191 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+  QAlaunch design tokens.
+  We expose the brand palette as flat CSS variables, then map them into
+  Tailwind v4 via `@theme inline` so utility classes like `bg-brand`,
+  `text-ink`, `border-border-soft` are available everywhere.
+*/
+:root {
+  /* Brand palette */
+  --brand: #1847a8;
+  --brand-dark: #0c2560;
+  --brand-mid: #2558d4;
+  --brand-pale: #eef3fd;
+
+  --accent: #16a34a;
+  --accent-bright: #22c55e;
+  --accent-pale: #ecfdf5;
+
+  --slate-deep: #09111f;
+  --ink: #18293a;
+  --body-text: #3b536b;
+  --muted-ink: #6b8aa3;
+
+  --border-soft: #dde6f0;
+  --surface-soft: #f4f8fc;
+
+  --danger: #dc2626;
+  --danger-pale: #fef2f2;
+  --warn: #d97706;
+  --warn-pale: #fffbeb;
+
+  /* shadcn compatibility tokens (kept for any shadcn primitives in use) */
+  --background: #ffffff;
+  --foreground: var(--ink);
+  --card: #ffffff;
+  --card-foreground: var(--ink);
+  --popover: #ffffff;
+  --popover-foreground: var(--ink);
+  --primary: var(--brand);
+  --primary-foreground: #ffffff;
+  --secondary: var(--surface-soft);
+  --secondary-foreground: var(--ink);
+  --muted: var(--surface-soft);
+  --muted-foreground: var(--muted-ink);
+  --accent-fg: var(--ink);
+  --destructive: var(--danger);
+  --destructive-foreground: #ffffff;
+  --border: var(--border-soft);
+  --input: var(--border-soft);
+  --ring: var(--brand-mid);
+  --radius: 0.75rem;
+}
+
+@theme inline {
+  /* Fonts wired up through next/font in layout.tsx */
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-epilogue), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  /* Brand colors exposed as Tailwind utilities */
+  --color-brand: var(--brand);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-mid: var(--brand-mid);
+  --color-brand-pale: var(--brand-pale);
+
+  --color-accent-emerald: var(--accent);
+  --color-accent-bright: var(--accent-bright);
+  --color-accent-pale: var(--accent-pale);
+
+  --color-slate-deep: var(--slate-deep);
+  --color-ink: var(--ink);
+  --color-body: var(--body-text);
+  --color-muted-ink: var(--muted-ink);
+
+  --color-border-soft: var(--border-soft);
+  --color-surface-soft: var(--surface-soft);
+
+  --color-danger: var(--danger);
+  --color-danger-pale: var(--danger-pale);
+  --color-warn: var(--warn);
+  --color-warn-pale: var(--warn-pale);
+
+  /* shadcn tokens */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-fg);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-ink font-sans antialiased;
+    line-height: 1.65;
+  }
+}
+
+/* Subtle animations used by the hero mock dashboard and the ticker. */
+@keyframes qa-blink {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(0.7);
+  }
+}
+@keyframes qa-orb {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-24px);
+  }
+}
+@keyframes qa-ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+@keyframes qa-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.qa-blink {
+  animation: qa-blink 2s infinite;
+}
+.qa-orb-float {
+  animation: qa-orb 8s ease-in-out infinite;
+}
+.qa-orb-float-alt {
+  animation: qa-orb 10s ease-in-out infinite reverse;
+}
+.qa-ticker {
+  animation: qa-ticker 26s linear infinite;
+}
+.qa-spin {
+  animation: qa-spin 0.9s linear infinite;
+}
+
+.qa-hero-grid {
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.06) 1px,
+    transparent 1px
+  );
+  background-size: 32px 32px;
+}
+.qa-cta-grid {
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
+}
