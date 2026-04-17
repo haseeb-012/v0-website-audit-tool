@@ -147,7 +147,7 @@ function CTAButton({ plan }: { plan: Plan }) {
     <motion.div whileTap={{ scale: 0.97 }} whileHover={{ y: -2 }}>
       <Link
         href={plan.cta.href}
-        className={cn(baseClasses, variantClasses, "block")}
+        className={cn(baseClasses, variantClasses, "block","flex justify-center")}
       >
         {plan.cta.label}
       </Link>
