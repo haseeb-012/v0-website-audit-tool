@@ -1,94 +1,87 @@
 "use client"
 
-import { Frown, Smartphone, AlertTriangle, Clock } from "lucide-react"
+import { Bug, Smartphone, AlertCircle, Zap } from "lucide-react"
 import { motion } from "motion/react"
 
 import { SectionHeader } from "@/components/site/section-header"
-import { fadeUp, stagger } from "@/components/motion/primitives"
 
 const problems = [
   {
-    icon: Frown,
-    title: "Users can't figure out how to use your site",
-    description:
-      "Confusing navigation, unclear CTAs, and poor information hierarchy make visitors give up — even if your product is exactly what they need.",
-    stat: "88% of users never return after a bad experience",
+    icon: Bug,
+    title: "Broken Features",
+    description: "Interactive bugs, form validation errors, and broken functionality go unnoticed.",
   },
   {
     icon: Smartphone,
-    title: "Your site looks broken on their phone",
-    description:
-      "Over 60% of web traffic is mobile. Buttons that don't tap, text that overflows, and layouts that collapse are invisible to you on desktop but fatal on mobile.",
-    stat: "61% won't return to a mobile-unfriendly site",
+    title: "Poor Mobile UX",
+    description: "Unresponsive layouts, unreadable text, and touch targets that don't work.",
   },
   {
-    icon: AlertTriangle,
-    title: "Broken forms and non-working buttons",
-    description:
-      "Forms that submit nowhere. CTAs that go to 404 pages. These failures happen after every update and most businesses discover them weeks later — from angry customers.",
-    stat: "1 in 4 AI-built sites has a critical broken element",
+    icon: AlertCircle,
+    title: "Performance Issues",
+    description: "Slow load times and bloated resources that hurt conversion rates.",
   },
   {
-    icon: Clock,
-    title: "It loads too slowly to hold attention",
-    description:
-      "Users decide in 3 seconds. A slow page doesn't just frustrate — it signals an untrustworthy, low-quality product before your content even loads.",
-    stat: "53% of users leave if a page takes over 3 seconds",
+    icon: Zap,
+    title: "Accessibility Gaps",
+    description: "Missing alt text, poor color contrast, and keyboard navigation failures.",
   },
 ]
 
-/**
- * Four-card problem framing section. Cards stagger in on scroll and
- * lift/tilt on hover for a tactile, modern feel.
- */
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.05,
+    },
+  },
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  },
+}
+
 export function ProblemSection() {
   return (
-    <section className="bg-surface-soft px-5 py-20 md:px-12 md:py-24">
-      <div className="mx-auto max-w-7xl">
+    <section className="px-5 py-20 sm:px-8 md:px-12 md:py-24 lg:py-28">
+      <div className="mx-auto max-w-6xl">
         <SectionHeader
-          eyebrow="The Real Problem"
-          title={
-            <>
-              Your website is silently
-              <br className="hidden md:block" /> losing customers every day
-            </>
-          }
-          description="Broken buttons, confusing layouts, and slow mobile pages don't announce themselves. Your customers just leave — and never tell you why."
+          eyebrow="The Problem"
+          title="Website issues cost you customers"
+          description="Bugs, performance problems, and accessibility failures go undetected until it's too late."
+          align="center"
         />
 
         <motion.div
-          className="mt-12 grid gap-5 md:grid-cols-2"
-          variants={stagger(0.1, 0.12)}
+          className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+          variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: true, margin: "-100px" }}
         >
-          {problems.map(({ icon: Icon, title, description, stat }) => (
+          {problems.map(({ icon: Icon, title, description }) => (
             <motion.article
               key={title}
-              variants={fadeUp}
-              whileHover={{ y: -6 }}
-              transition={{ type: "spring", stiffness: 260, damping: 20 }}
-              tabIndex={0}
-              className="group relative overflow-hidden rounded-2xl border border-border-soft bg-white p-7 outline-none hover:border-brand hover:shadow-card-hover focus-visible:border-brand focus-visible:ring-4 focus-visible:ring-brand/15"
+              variants={itemVariants}
+              whileHover={{ y: -3, boxShadow: "var(--shadow-lg)" }}
+              className="interactive rounded-lg border border-border bg-white p-6"
             >
-              <span className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-danger to-[#f97316]" />
-              <motion.div
-                whileHover={{ rotate: -8, scale: 1.12 }}
-                transition={{ type: "spring", stiffness: 320, damping: 15 }}
-                className="mb-4 inline-flex size-11 items-center justify-center rounded-xl bg-danger-pale text-danger"
-              >
+              <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-brand/10 text-brand">
                 <Icon className="size-5" />
-              </motion.div>
-              <h3 className="font-heading text-lg font-extrabold leading-snug text-ink">
+              </div>
+              <h3 className="font-heading text-base font-bold text-slate md:text-lg">
                 {title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-body">
+              <p className="mt-2 text-sm text-text-secondary">
                 {description}
               </p>
-              <span className="mt-4 inline-block rounded-full bg-danger-pale px-3 py-1 text-xs font-bold text-danger">
-                {stat}
-              </span>
             </motion.article>
           ))}
         </motion.div>

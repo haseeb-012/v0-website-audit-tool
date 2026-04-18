@@ -1,130 +1,77 @@
 @import 'tailwindcss';
-@import 'tw-animate-css';
-
-@custom-variant dark (&:is(.dark *));
 
 /*
-  QAlaunch design tokens.
-  We expose the brand palette as flat CSS variables, then map them into
-  Tailwind v4 via `@theme inline` so utility classes like `bg-brand`,
-  `text-ink`, `border-border-soft` are available everywhere.
+  QAlaunch — Professional Minimal Design
+  Clean, modern palette with subtle motion micro-interactions
 */
 :root {
-  /* Brand palette */
+  /* Primary brand palette */
   --brand: #1847a8;
   --brand-dark: #0c2560;
-  --brand-mid: #2558d4;
-  --brand-pale: #eef3fd;
+  --brand-light: #eef3fd;
 
+  /* Accent for CTAs & highlights */
   --accent: #16a34a;
   --accent-bright: #22c55e;
-  --accent-pale: #ecfdf5;
 
-  --slate-deep: #09111f;
+  /* Neutral scale for typography & borders */
+  --slate: #09111f;
   --ink: #18293a;
-  --body-text: #3b536b;
-  --muted-ink: #6b8aa3;
+  --text-secondary: #3b536b;
+  --text-muted: #6b8aa3;
+  --border: #dde6f0;
+  --surface: #f4f8fc;
 
-  --border-soft: #dde6f0;
-  --surface-soft: #f4f8fc;
-
+  /* Semantic colors */
   --danger: #dc2626;
-  --danger-pale: #fef2f2;
-  --warn: #d97706;
-  --warn-pale: #fffbeb;
+  --danger-light: #fef2f2;
 
-  /* Elevation + glow tokens (reusable shadow utilities) */
-  --shadow-card: 0 10px 30px -12px rgba(15, 23, 42, 0.12);
-  --shadow-card-hover: 0 24px 50px -18px rgba(24, 71, 168, 0.22);
-  --shadow-glow-accent: 0 12px 32px -10px rgba(22, 163, 74, 0.55);
-  --shadow-glow-accent-lg: 0 20px 48px -12px rgba(22, 163, 74, 0.7);
-  --shadow-glow-brand: 0 12px 36px -10px rgba(24, 71, 168, 0.35);
-  --shadow-surface-dark: 0 24px 60px -24px rgba(0, 0, 0, 0.55);
+  /* Shadows — minimal depth */
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 8px 20px rgba(15, 23, 42, 0.12);
+  --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.16);
+  --shadow-xl: 0 24px 60px rgba(15, 23, 42, 0.2);
 
-  /* shadcn compatibility tokens (kept for any shadcn primitives in use) */
+  /* shadcn compat (minimal set) */
   --background: #ffffff;
   --foreground: var(--ink);
-  --card: #ffffff;
-  --card-foreground: var(--ink);
-  --popover: #ffffff;
-  --popover-foreground: var(--ink);
   --primary: var(--brand);
   --primary-foreground: #ffffff;
-  --secondary: var(--surface-soft);
-  --secondary-foreground: var(--ink);
-  --muted: var(--surface-soft);
-  --muted-foreground: var(--muted-ink);
-  --accent-fg: var(--ink);
-  --destructive: var(--danger);
-  --destructive-foreground: #ffffff;
-  --border: var(--border-soft);
-  --input: var(--border-soft);
-  --ring: var(--brand-mid);
+  --ring: var(--brand);
   --radius: 0.75rem;
 }
 
 @theme inline {
-  /* Fonts wired up through next/font in layout.tsx */
   --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-epilogue), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 
-  /* Brand colors exposed as Tailwind utilities */
   --color-brand: var(--brand);
   --color-brand-dark: var(--brand-dark);
-  --color-brand-mid: var(--brand-mid);
-  --color-brand-pale: var(--brand-pale);
-
-  --color-accent-emerald: var(--accent);
+  --color-brand-light: var(--brand-light);
+  --color-accent: var(--accent);
   --color-accent-bright: var(--accent-bright);
-  --color-accent-pale: var(--accent-pale);
 
-  --color-slate-deep: var(--slate-deep);
+  --color-slate: var(--slate);
   --color-ink: var(--ink);
-  --color-body: var(--body-text);
-  --color-muted-ink: var(--muted-ink);
-
-  --color-border-soft: var(--border-soft);
-  --color-surface-soft: var(--surface-soft);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
 
   --color-danger: var(--danger);
-  --color-danger-pale: var(--danger-pale);
-  --color-warn: var(--warn);
-  --color-warn-pale: var(--warn-pale);
+  --color-danger-light: var(--danger-light);
 
-  /* Named shadow utilities — use as shadow-card, shadow-glow-accent, etc. */
-  --shadow-card: var(--shadow-card);
-  --shadow-card-hover: var(--shadow-card-hover);
-  --shadow-glow-accent: var(--shadow-glow-accent);
-  --shadow-glow-accent-lg: var(--shadow-glow-accent-lg);
-  --shadow-glow-brand: var(--shadow-glow-brand);
-  --shadow-surface-dark: var(--shadow-surface-dark);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
 
-  /* shadcn tokens */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-fg);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
   --color-ring: var(--ring);
-
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
 }
 
 @layer base {
@@ -138,7 +85,6 @@
     @apply bg-background text-ink font-sans antialiased;
     line-height: 1.65;
   }
-  /* Respect users who prefer reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -151,134 +97,68 @@
 }
 
 /* ─────────────────────────────────────────────
-   Animations — hero mock, ticker, reveals, microinteractions
+   Minimal animations for micro-interactions
    ───────────────────────────────────────────── */
-@keyframes qa-blink {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.3;
-    transform: scale(0.7);
-  }
-}
-@keyframes qa-orb {
+
+@keyframes float {
   0%,
   100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-24px);
+    transform: translateY(-8px);
   }
 }
-@keyframes qa-ticker {
-  0% {
-    transform: translateX(0);
-  }
+
+@keyframes pulse-soft {
+  0%,
   100% {
-    transform: translateX(-50%);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
   }
 }
-@keyframes qa-spin {
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
   to {
-    transform: rotate(360deg);
-  }
-}
-@keyframes qa-reveal {
-  0% {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  100% {
     opacity: 1;
     transform: translateY(0);
   }
 }
-@keyframes qa-reveal-soft {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes qa-pulse-ring {
-  0% {
-    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.35);
-  }
-  70% {
-    box-shadow: 0 0 0 14px rgba(34, 197, 94, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
-  }
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
 }
 
-.qa-blink {
-  animation: qa-blink 2s infinite;
-}
-.qa-orb-float {
-  animation: qa-orb 8s ease-in-out infinite;
-}
-.qa-orb-float-alt {
-  animation: qa-orb 10s ease-in-out infinite reverse;
-}
-.qa-ticker {
-  animation: qa-ticker 26s linear infinite;
-}
-.qa-spin {
-  animation: qa-spin 0.9s linear infinite;
-}
-.qa-pulse-ring {
-  animation: qa-pulse-ring 2.4s infinite;
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
 }
 
-/* Entrance reveals — applied on mount with optional delay utilities */
-.qa-reveal {
-  animation: qa-reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-.qa-reveal-soft {
-  animation: qa-reveal-soft 0.55s ease-out both;
-}
-.qa-delay-1 {
-  animation-delay: 0.08s;
-}
-.qa-delay-2 {
-  animation-delay: 0.16s;
-}
-.qa-delay-3 {
-  animation-delay: 0.24s;
-}
-.qa-delay-4 {
-  animation-delay: 0.32s;
+.animate-slide-in {
+  animation: slide-in 0.5s ease-out;
 }
 
-/* Shared press microinteraction — use on any tappable button */
-.qa-press {
-  transition-property: transform, background-color, box-shadow, border-color,
-    color;
-  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-  transition-duration: 200ms;
-}
-.qa-press:active {
-  transform: translateY(1px) scale(0.985);
+/* Subtle depth on interactive elements */
+.interactive {
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.qa-hero-grid {
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.06) 1px,
-    transparent 1px
-  );
+.interactive:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+.interactive:active {
+  transform: translateY(0);
+}
+
+/* Grid background pattern (optional for hero) */
+.bg-grid {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px);
   background-size: 32px 32px;
-}
-.qa-cta-grid {
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.05) 1px,
-    transparent 1px
-  );
-  background-size: 28px 28px;
 }
