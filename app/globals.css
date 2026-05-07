@@ -1,7 +1,4 @@
 @import 'tailwindcss';
-@import 'tw-animate-css';
-
-@custom-variant dark (&:is(.dark *));
 
 /*
   QAlaunch design tokens.
@@ -41,24 +38,9 @@
   --shadow-glow-brand: 0 12px 36px -10px rgba(24, 71, 168, 0.35);
   --shadow-surface-dark: 0 24px 60px -24px rgba(0, 0, 0, 0.55);
 
-  /* shadcn compatibility tokens (kept for any shadcn primitives in use) */
+  /* Base tokens — used by `@layer base` and `bg-background` on `<html>` */
   --background: #ffffff;
-  --foreground: var(--ink);
-  --card: #ffffff;
-  --card-foreground: var(--ink);
-  --popover: #ffffff;
-  --popover-foreground: var(--ink);
-  --primary: var(--brand);
-  --primary-foreground: #ffffff;
-  --secondary: var(--surface-soft);
-  --secondary-foreground: var(--ink);
-  --muted: var(--surface-soft);
-  --muted-foreground: var(--muted-ink);
-  --accent-fg: var(--ink);
-  --destructive: var(--danger);
-  --destructive-foreground: #ffffff;
   --border: var(--border-soft);
-  --input: var(--border-soft);
   --ring: var(--brand-mid);
   --radius: 0.75rem;
 }
@@ -100,25 +82,8 @@
   --shadow-glow-brand: var(--shadow-glow-brand);
   --shadow-surface-dark: var(--shadow-surface-dark);
 
-  /* shadcn tokens */
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-fg);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
-  --color-input: var(--input);
   --color-ring: var(--ring);
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -153,17 +118,6 @@
 /* ─────────────────────────────────────────────
    Animations — hero mock, ticker, reveals, microinteractions
    ───────────────────────────────────────────── */
-@keyframes qa-blink {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.3;
-    transform: scale(0.7);
-  }
-}
 @keyframes qa-orb {
   0%,
   100% {
@@ -186,41 +140,7 @@
     transform: rotate(360deg);
   }
 }
-@keyframes qa-reveal {
-  0% {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes qa-reveal-soft {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes qa-pulse-ring {
-  0% {
-    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.35);
-  }
-  70% {
-    box-shadow: 0 0 0 14px rgba(34, 197, 94, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
-  }
-}
 
-.qa-blink {
-  animation: qa-blink 2s infinite;
-}
 .qa-orb-float {
   animation: qa-orb 8s ease-in-out infinite;
 }
@@ -232,29 +152,6 @@
 }
 .qa-spin {
   animation: qa-spin 0.9s linear infinite;
-}
-.qa-pulse-ring {
-  animation: qa-pulse-ring 2.4s infinite;
-}
-
-/* Entrance reveals — applied on mount with optional delay utilities */
-.qa-reveal {
-  animation: qa-reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-.qa-reveal-soft {
-  animation: qa-reveal-soft 0.55s ease-out both;
-}
-.qa-delay-1 {
-  animation-delay: 0.08s;
-}
-.qa-delay-2 {
-  animation-delay: 0.16s;
-}
-.qa-delay-3 {
-  animation-delay: 0.24s;
-}
-.qa-delay-4 {
-  animation-delay: 0.32s;
 }
 
 /* Shared press microinteraction — use on any tappable button */

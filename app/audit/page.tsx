@@ -21,7 +21,7 @@ export default function AuditPage() {
         <Suspense
           fallback={
             <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-surface-soft">
-              <div className="qa-spin size-12 rounded-full border-[4px] border-brand-pale border-t-brand" />
+              <div className="qa-spin size-12 rounded-full border-4 border-brand-pale border-t-brand" />
             </div>
           }
         >
